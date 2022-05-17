@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    name: course_system
+    url: jdbc:mysql://localhost:3306/course_system
+    username: root
+    password: 1234567890
+    driver-class-name: com.mysql.jdbc.Driver
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.program.senior.coursesystem.entity
