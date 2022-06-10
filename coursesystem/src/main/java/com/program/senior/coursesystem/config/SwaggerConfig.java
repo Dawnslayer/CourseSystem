@@ -24,10 +24,10 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("Swagger接口使用")
+                .title("Swagger接口文档")
                 .contact(new Contact("向晚大魔王", "", ""))
                 .version("1.0")
-                .description("测试Swagger")
+                .description("项目的Swagger接口")
                 .build();
     }
 }
