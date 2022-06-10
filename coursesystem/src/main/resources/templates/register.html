@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>用户注册</title>
+    <link rel="stylesheet"  href="login.css" />
+</head>
+
+<body>
+<div class="login">
+    <h2>用户注册</h2>
+    <div class="login_box">
+        <!-- required就是不能为空  必须在css效果中有很大的作用 -->
+        <input type="text" name='name' id='name' required="required" />
+        <label for="name" >姓名</label>
+        <p style="color: white">你是<select id="identity" name="identity">
+            <option value="Student">学生</option>
+            <option value="Teacher">老师</option>
+            <option value="Admin">教务</option>
+        </select>
+        </p>
+    </div>
+    <br>
+    <div class="login_box">
+        <input type="number" name='num' id='num' required="required">
+        <label for="pwd">学/工号</label>
+    </div>
+    <div class="login_box">
+        <input type="password" name='pwd' id='pwd' required="required">
+        <label for="pwd">密码</label>
+    </div>
+    <a href="javascript:registerFn()">
+        注册
+    </a>
+    <a href="login.html">
+        回到登陆
+    </a>
+
+</div>
+<script>
+    function registerFn(){//这里添加到数据库中，但我不会来着
+
+    }
+</script>
+</body>
+</html>
