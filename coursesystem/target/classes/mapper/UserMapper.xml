@@ -4,4 +4,12 @@
     <select id="getInfo" resultType="com.program.senior.coursesystem.entity.UserBean">
         select * from user where name = #{name} and number = #{number} and password = #{password}
     </select>
+
+    <insert id="addUser">
+        insert into user values (#{name}, #{number}, #{password}, #{type})
+    </insert>
+
+    <select id="hasNumber" resultType="com.program.senior.coursesystem.entity.UserBean">
+        select * from user where number = #{number}
+    </select>
 </mapper>

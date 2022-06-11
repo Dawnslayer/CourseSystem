@@ -20,7 +20,7 @@ public class UserController {
     @ApiOperation(value = "用户登录")
     public String login(String name, int number, String password, Model model){
         UserBean userBean = userService.loginIn(name, number, password);
-        if(userBean==null) return "login";
+        if(userBean==null) return "index";
         model.addAttribute("name", userBean.getName());
         model.addAttribute("number", userBean.getNumber());
         String type = userBean.getType();
