@@ -3,16 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>审核</title>
-    <!-- 新 Bootstrap5 核心 CSS 文件 -->
+    <link rel="stylesheet"  type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
-    <!--  popper.min.js 用于弹窗、提示、下拉菜单 -->
-    <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
-    <!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
-    <!-- 新 Bootstrap5 核心 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
-    <!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
 
     <script>
         function tz(){
@@ -48,15 +40,18 @@
             <th></th>
         </tr>
     </table>
-<div style="vertical-align: middle">
+<div class="container">
 
-        <p style="text-align: center;vertical-align: middle">
-        课程内容:
-        <textarea rows="1" cols="30">
-            123.
-        </textarea>
-        </p>
-</div>
+    <div class="row">
+
+        <div class="col-md-3" style="text-align: end">
+            <label class="text">课程内容：</label>
+        </div >
+        <div class="col-md-6">
+            <textarea class="form-control"></textarea><br>
+        </div>
+
+    </div>
 <div style="text-align: center">
     <button onclick="tz()">审核通过</button>
     <button onclick="tz()">审核不通过</button>
