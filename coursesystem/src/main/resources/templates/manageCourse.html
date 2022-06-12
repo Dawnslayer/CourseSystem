@@ -3,14 +3,32 @@
     <head>
         <meta charset="UTF-8">
         <title>管理课程</title>
-
         <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+        <script>
+            function tz(){
+                window.location.href='addCourse.html';
+            }
+        </script>
     </head>
     <body>
         <div class="row" style="text-align: end">
             <p>您好， 老师</p><!--这里要读取数据库--><a href="index.html">退出登录</a>
         </div>
         <h3>我教的课程</h3><br>
+        <label class="text">所选学年：</label>
+
+        <select class="form-control">
+            <option>2020</option>
+            <option>2021</option>
+            <option>2022</option>
+        </select><br>
+
+        <label class="text">所选学期：</label>
+
+        <select class="form-control">
+            <option>1</option>
+            <option>2</option>
+        </select><br>
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
@@ -18,6 +36,8 @@
                 <th>课程名称</th>
                 <th>课程性质</th>
                 <th>学分</th>
+                <th>时间</th>
+                <th>教室</th>
                 <th>学生数量</th>
                 <th>操作</th>
             </tr>
@@ -28,6 +48,9 @@
                 <td>spy</td>
                 <td>专业必修</td>
                 <td>2</td>
+
+                <td></td>
+                <td></td>
                 <td>0</td>
                 <td><button>删除</button></td>
             </tr>
@@ -37,8 +60,33 @@
 
 
         <div class="text-center">
-            <button><a href="addCourse.html">添加新课程</a> </button>
+            <button><a href="addCourse.html" onclick="tz()">添加新课程</a> </button>
         </div>
 
+
+        <h3>审核中的课程</h3><br>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>课程ID</th>
+                <th>课程名称</th>
+                <th>课程性质</th>
+                <th>学分</th>
+                <th>时间</th>
+                <th>教室</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>007</td>
+                <td>spy</td>
+                <td>专业必修</td>
+                <td>2</td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            </tbody>
+        </table>
     </body>
 </html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.program.senior.coursesystem.dao.TeacherMapper">
+    <select id="courseOpened" resultType="com.program.senior.coursesystem.entity.CourseBean">
+        select * from course where year = #{year} and term = #{term} and id in (select id from teacher where number = #{number} and courseState = '已开课')
+    </select>
+
+    <select id="courseInExamine" resultType="com.program.senior.coursesystem.entity.CourseBean">
+        select * from course where year = #{year} and term = #{term} and id in (select id from teacher where number = #{number} and courseState = '审核中')
+    </select>
+
+    <select id="getStudentNumber" resultType="java.lang.Integer">
+        select count(*) from student where id = #{id}
+    </select>
+
+    <delete id="deleteCourse">
+        delete * from course where id = #{id};
+        delete * from student where id = #{id};
+        delete * from teacher where id = #{id}
+    </delete>
+
+    <insert id="addCourse">
+        insert into teacher values (#{name}, #{number}, #{id}, '审核中', '未发布')
+    </insert>
+
+    <select id="getScoreStateById" resultType="java.lang.String">
+        select scoreState from teacher where id = #{id}
+    </select>
+
+    <update id="changeScoreState">
+        update teacher set scoreState = '审核中' where id = #{id}
+    </update>
+
+    <update id="releaseScore">
+        update student set score = #{score}, grade = #{grade}, gpa = #{gpa}, comment = #{comment} where id = #{id} and number = #{number}
+    </update>
+
+    <update id="courseAccept">
+        update teacher set courseState = '已开课' where id = #{id}
+    </update>
+
+    <update id="scoreAccept">
+        update teacher set scoreState = '已发布' where id = #{id}
+    </update>
+
+    <update id="scoreRefuse">
+        update teacher set scoreState = '未发布' where id = #{id}
+    </update>
+</mapper>
