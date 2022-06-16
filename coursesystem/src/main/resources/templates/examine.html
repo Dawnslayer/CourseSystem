@@ -1,45 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>审核</title>
     <link rel="stylesheet"  type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
-
-    <script>
-        function tz(){
-            window.location.href='examineCourse.html';
-        }
-    </script>
 </head>
 <body>
 <h1 style="text-align: center">课程详细信息</h1>
+<br>
     <table class="table table-bordered" style="text-align: center">
         <tr>
-            <th>课程名称</th>
-            <th></th>
-            <th>课程性质</th>
-            <th></th>
+            <td width="20%">课程名称</td>
+            <td th:text="${courseName}"  width="30%"></td>
+            <td width="20%">课程性质</td>
+            <td th:text="${property}"  width="30%"></td>
         </tr>
         <tr>
-            <th>开课学年</th>
-            <th></th>
-            <th>开课学期</th>
-            <th></th>
+            <td>开课学年</td>
+            <td th:text="${year}"></td>
+            <td>开课学期</td>
+            <td th:text="${term}"></td>
         </tr>
         <tr>
-            <th>上课时间</th>
-            <th></th>
-            <th>上课教室</th>
-            <th></th>
+            <td>上课时间</td>
+            <td th:text="${time}"></td>
+            <td>上课教室</td>
+            <td th:text="${classroom}"></td>
         </tr>
         <tr>
-            <th>任课老师</th>
-            <th></th>
-            <th>学分</th>
-            <th></th>
+            <td>任课老师</td>
+            <td th:text="${teacher}"></td>
+            <td>学分</td>
+            <td th:text="${credit}"></td>
         </tr>
     </table>
+<br>
 <div class="container">
 
     <div class="row">
@@ -48,13 +44,21 @@
             <label class="text">课程内容：</label>
         </div >
         <div class="col-md-6">
-            <textarea class="form-control"></textarea><br>
+            <textarea class="form-control" th:text="${content}" readonly></textarea><br>
         </div>
 
     </div>
 <div style="text-align: center">
-    <button onclick="tz()">审核通过</button>
-    <button onclick="tz()">审核不通过</button>
+    <form action="/courseAccept" method="post">
+        <input type="hidden" name="id" th:value="${id}">
+        <input type="submit" value="审核通过">
+    </form>
+    <br>
+    <form action="/courseRefuse" method="post">
+        <input type="hidden" name="id" th:value="${id}">
+        <input type="submit" value="审核不通过">
+    </form>
+</div>
 </div>
 </body>
 </html>

@@ -1,34 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <title>管理课程</title>
         <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
-        <script>
-            function tz(){
-                window.location.href='addCourse.html';
-            }
-        </script>
     </head>
     <body>
         <div class="row" style="text-align: end">
-            <p>您好， 老师</p><!--这里要读取数据库--><a href="index.html">退出登录</a>
+            <p id="hello"></p>  <a href="#" onclick="logout()">退出登录</a>
         </div>
         <h3>我教的课程</h3><br>
-        <label class="text">所选学年：</label>
-
-        <select class="form-control">
-            <option>2020</option>
-            <option>2021</option>
-            <option>2022</option>
-        </select><br>
-
-        <label class="text">所选学期：</label>
-
-        <select class="form-control">
-            <option>1</option>
-            <option>2</option>
-        </select><br>
+        <form action="/courseTeaching" method="post">
+            <p>选择学年 <select name="year">
+                <option value ="2022">2022</option>
+                <option value ="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+            </select>
+                选择学期 <select name="term">
+                    <option value ="1">1</option>
+                    <option value ="2">2</option>
+                    <input type="hidden" name="number" id="number">
+                    <input type="submit" value="搜索">
+                </select> </p>
+        </form>
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
@@ -43,24 +38,22 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>007</td>
-                <td>spy</td>
-                <td>专业必修</td>
-                <td>2</td>
-
-                <td></td>
-                <td></td>
-                <td>0</td>
-                <td><button>删除</button></td>
+            <form action="/deleteCourse" method="post">
+                <input type="hidden" name="number" id="num">
+                <input type="hidden" name="year" th:value="${year}">
+                <input type="hidden" name="term" th:value="${term}">
+            <tr th:each="courses:${courseHasOpened}">
+                <td th:each="course:${courses}" th:text="${course}"></td>
+                <input type="hidden" name="id" th:value="${courses[0]}">
+                <td><input type="submit" value="取消开课"></td>
             </tr>
-
+            </form>
             </tbody>
         </table>
 
 
         <div class="text-center">
-            <button><a href="addCourse.html" onclick="tz()">添加新课程</a> </button>
+            <button><a href="/addCourse">添加新课程</a> </button>
         </div>
 
 
@@ -77,16 +70,19 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>007</td>
-                <td>spy</td>
-                <td>专业必修</td>
-                <td>2</td>
-                <td></td>
-                <td></td>
+            <tr th:each="examine:${courseInExamine}">
+                <td th:each="item:${examine}" th:text="${item}"></td>
             </tr>
-
             </tbody>
         </table>
     </body>
+    <script>
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = "/login";
+        }
+        document.getElementById("hello").innerText = "您好,"+sessionStorage.getItem("name")+"!";
+        document.getElementById("number").value = sessionStorage.getItem("number");
+        document.getElementById("num").value = sessionStorage.getItem("number");
+    </script>
 </html>

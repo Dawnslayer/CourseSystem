@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>学生成绩</title>
@@ -13,11 +13,6 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
     <!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function tz(){
-            window.location.href='examineScore.html';
-        }
-    </script>
 </head>
 <body>
 <h2 style="text-align: center">学生成绩</h2>
@@ -32,10 +27,22 @@
             <th>备注</th>
         </tr>
     </thead>
+    <tbody>
+    <tr th:each="scores:${scoreOfStudents}">
+        <td th:each="score:${scores}" th:text="${score}"></td>
+    </tr>
+    </tbody>
 </table>
 <div style="text-align: center">
-    <button onclick="tz()">审核通过</button>
-    <button onclick="tz()">审核不通过</button>
+    <form action="/scoreAccept" method="post">
+        <input type="hidden" name="id" th:value="${id}">
+        <input type="submit" value="审核通过">
+    </form>
+    <br>
+    <form action="/scoreRefuse" method="post">
+        <input type="hidden" name="id" th:value="${id}">
+        <input type="submit" value="审核不通过">
+    </form>
 </div>
 </body>
 </html>

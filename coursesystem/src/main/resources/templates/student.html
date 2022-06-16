@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>student</title>
+    <title>学生</title>
     <!-- 新 Bootstrap5 核心 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
     <!--  popper.min.js 用于弹窗、提示、下拉菜单 -->
@@ -16,24 +16,61 @@
 </head>
 <body>
 <div class="row" style="text-align: end">
-    <p>您好， 学生</p><!--这里要读取数据库--><a href="index.html">退出登录</a>
+    <p th:inline="text">您好,[[${name}]]!  <a href="#" onclick="logout()">退出登录</a></p>
 </div>
 <div class="row">
     <div class="col" style="text-align: center; width: 500px;">
-        <a href="chooseCourse.html">
-        <img src="../static/picture/chooseCourse.png" height="300" width="300"/>
-        <br>选课</a>
+        <form action="/courseInfo" method="post" id="chooseCourse" target="_blank">
+        <img src="../picture/chooseCourse.png" height="300" width="300" onclick="submit1()"/>
+        <br>
+            <input type="hidden" name="number" id="num1">
+            <input type="hidden" name="year" value="2022">
+            <input type="hidden" name="term" value="1">
+            <input type="submit" value="选课">
+        </form>
     </div>
     <div class="col" style="text-align: center; width: 500px;">
-        <a href="viewScore.html">
-        <img src="../static/picture/viewScore.png" height="300" width="300"/>
-        <br>查看成绩</a>
+        <form action="/getCourseScore" method="post" id="courseScore" target="_blank">
+        <img src="../picture/viewScore.png" height="300" width="300" onclick="submit2()"/>
+        <br>
+            <input type="hidden" name="number" id="num2">
+            <input type="hidden" name="year" value="2022">
+            <input type="hidden" name="term" value="1">
+            <input type="submit" value="查看成绩">
+        </form>
     </div>
     <div class="col" style="text-align: center; width: 500px;">
-        <a href="timetable.html">
-        <img src="../static/picture/timetable.png" height="300" width="300"/>
-        <br></br>课程表</a>
+        <form action="/getTimetable" method="post" id="timetable" target="_blank">
+        <img src="../picture/timetable.png" height="300" width="300" onclick="submit3()"/>
+        <br>
+            <input type="hidden" name="number" id="num3">
+            <input type="hidden" name="year" value="2022">
+            <input type="hidden" name="term" value="1">
+            <input type="submit" value="课程表">
+        </form>
     </div>
 </div>
 </body>
+<script th:inline="javascript">
+    var name = [[${name}]];
+    var number = [[${number}]];
+    sessionStorage.setItem("name", name);
+    sessionStorage.setItem("number", number);
+    document.getElementById("num1").value = sessionStorage.getItem("number");
+    document.getElementById("num2").value = sessionStorage.getItem("number");
+    document.getElementById("num3").value = sessionStorage.getItem("number");
+    function logout() {
+        sessionStorage.clear();
+        window.location.href = "/login";
+    }
+    function submit1() {
+        document.getElementById("chooseCourse").submit();
+    }
+    function submit2() {
+        document.getElementById("courseScore").submit();
+    }
+    function submit3() {
+        document.getElementById("timetable").submit();
+    }
+</script>
 </html>

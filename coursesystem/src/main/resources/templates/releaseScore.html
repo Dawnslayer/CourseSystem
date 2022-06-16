@@ -1,39 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <title>发布成绩</title>
         <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
-        <script>
-            function tz(){
-                window.location.href='release.html';
-            }
-        </script>
     </head>
     <body>
         <div class="row" style="text-align: end">
-            <p>您好， 老师</p><!--这里要读取数据库--><a href="index.html">退出登录</a>
+            <p id="hello"></p>  <a href="#" onclick="logout()">退出登录</a>
         </div>
         <h3>所有课程</h3><br>
 
-
-
-        <label class="text">所选学年：</label>
-
-        <select class="form-control">
-            <option>2020</option>
-            <option>2021</option>
-            <option>2022</option>
-        </select><br>
-
-        <label class="text">所选学期：</label>
-
-        <select class="form-control">
-            <option>1</option>
-            <option>2</option>
-        </select><br>
-
-
+        <form action="/getAllCourses" method="post">
+            <p>选择学年: <select name="year">
+                <option value ="2022">2022</option>
+                <option value ="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+            </select>
+            选择学期: <select name="term">
+                    <option value ="1">1</option>
+                    <option value ="2">2</option>
+                </select>
+            <input type="hidden" name="number" id="number">
+            <input type="submit" value="搜索">
+            </p>
+        </form>
 
         <table class="table table-bordered table-hover">
             <thead>
@@ -48,17 +40,36 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>007</td>
-                <td>spy</td>
-                <td>专业必修</td>
-                <td>2</td>
-                <td>？</td>
-                <td>未发布</td>
-                <td><button onclick="tz()">发布成绩</button></td>
+            <tr th:each="courses:${allCourses}">
+                <td th:each="course:${courses}" th:text="${course}"></td>
+                <td th:if="${courses[5]=='已发布'}">
+                    <form action="/checkScore" method="post">
+                        <input type="hidden" th:value="${courses[0]}" name="id">
+                        <input type="submit" value="查看">
+                    </form>
+                </td>
+                <td th:if="${courses[5]=='未发布'}">
+                    <form action="/releaseAndModify" method="post">
+                        <input type="hidden" th:value="${courses[0]}" name="id">
+                        <input type="submit" value="发布成绩">
+                    </form>
+                </td>
+                <td th:if="${courses[5]=='审核中'}">
+                    <form action="/releaseAndModify" method="post">
+                        <input type="hidden" th:value="${courses[0]}" name="id">
+                        <input type="submit" value="修改成绩">
+                    </form>
+                </td>
             </tr>
-
             </tbody>
         </table>
     </body>
+    <script>
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = "/login";
+        }
+        document.getElementById("hello").innerText = "您好,"+sessionStorage.getItem("name")+"!";
+        document.getElementById("number").value = sessionStorage.getItem("number");
+    </script>
 </html>

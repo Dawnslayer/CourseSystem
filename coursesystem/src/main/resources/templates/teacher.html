@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>teacher</title>
+        <title>老师</title>
         <!-- 新 Bootstrap5 核心 CSS 文件 -->
         <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
         <!--  popper.min.js 用于弹窗、提示、下拉菜单 -->
@@ -16,21 +16,48 @@
     </head>
     <body>
         <div class="row" style="text-align: end">
-            <p>您好， 老师</p><!--这里要读取数据库--><a href="index.html">退出登录</a>
+            <p th:inline="text">您好,[[${name}]]!  <a href="#" onclick="logout()">退出登录</a></p>
         </div>
         <div class="row">
-
             <div class="col" style="text-align: center; width: 500px;">
-                <a href="manageCourse.html">
-                    <img src="../static/picture/timetable.png" height="300" width="300"/>
-                    <br></br>管理课程</a>
+                <form action="/courseTeaching" method="post" id="manage" target="_blank">
+                    <img src="../picture/timetable.png" height="300" width="300" onclick="submit1()"/>
+                    <br>
+                    <input type="hidden" name="number" id="num1">
+                    <input type="hidden" name="year" value="2022">
+                    <input type="hidden" name="term" value="1">
+                    <input type="submit" value="管理课程">
+                </form>
             </div>
 
             <div class="col" style="text-align: center; width: 500px;">
-                <a href="releaseScore.html">
-                    <img src="../static/picture/viewScore.png" height="300" width="300"/>
-                    <br>发布成绩</a>
+                <form action="/getAllCourses" method="post" id="giveScore" target="_blank">
+                    <img src="../picture/viewScore.png" height="300" width="300" onclick="submit2()"/>
+                    <br>
+                    <input type="hidden" name="number" id="num2">
+                    <input type="hidden" name="year" value="2022">
+                    <input type="hidden" name="term" value="1">
+                    <input type="submit" value="发布成绩">
+                </form>
             </div>
         </div>
     </body>
+    <script th:inline="javascript">
+        var name = [[${name}]];
+        var number = [[${number}]];
+        sessionStorage.setItem("name", name);
+        sessionStorage.setItem("number", number);
+        document.getElementById("num1").value = sessionStorage.getItem("number");
+        document.getElementById("num2").value = sessionStorage.getItem("number");
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = "/login";
+        }
+        function submit1() {
+            document.getElementById("manage").submit();
+        }
+        function submit2() {
+            document.getElementById("giveScore").submit();
+        }
+    </script>
 </html>

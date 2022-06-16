@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>审核课程</title>
@@ -16,7 +16,7 @@
 </head>
 <body>
 <div class="row" style="text-align: end">
-    <p>您好， 教务<!--这里要读取数据库--><a href="index.html">退出登录</a></p>
+    <p id="hello"></p>  <a href="#" onclick="logout()">退出登录</a>
 </div>
 <h2>待审的新课程</h2>
 <table class="table table-bordered">
@@ -30,14 +30,21 @@
         </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>1</td>
-        <td>111</td>
-        <td>1111</td>
-        <td>11111</td>
-        <td><a href="examine.html" class="button">审核</a></td>
+    <tr th:each="courses:${courseCanExamine}">
+        <td th:each="course:${courses}" th:text="${course}"></td>
+        <form action="/detailInfo" method="post">
+            <input type="hidden" name="id" th:value="${courses[0]}">
+            <td><input type="submit" value="审核"></td>
+        </form>
     </tr>
     </tbody>
 </table>
 </body>
+<script>
+    function logout() {
+        sessionStorage.clear();
+        window.location.href = "/login";
+    }
+    document.getElementById("hello").innerText = "您好,"+sessionStorage.getItem("name")+"!";
+</script>
 </html>

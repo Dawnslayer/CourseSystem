@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="row" style="text-align: end">
-            <p>您好， 学生</p><!--这里要读取数据库--><a href="index.html">退出登录</a>
+            <p id="hello"></p>  <a href="#" onclick="logout()">退出登录</a>
         </div>
         <h3>可选课程</h3><br>
         <table class="table table-bordered table-hover">
@@ -27,19 +27,19 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><button>选课</button></td>
-            </tr>
+            <form action="/choose" method="post">
+                <input type="hidden" name="name" id="name">
+                <input type="hidden" name="number" id="number">
+            <tr th:each="courses : ${courseCanChoose}">
 
+                <td th:each="course : ${courses}" th:text="${course}"></td>
+                    <input type="hidden" name="id" th:value="${courses[0]}">
+                    <input type="hidden" name="year" value="2022">
+                    <input type="hidden" name="term" value="1">
+                    <td><input type="submit" value="选课"></td>
+
+            </tr>
+            </form>
             </tbody>
         </table>
 
@@ -60,19 +60,27 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><button>退课</button></td>
+            <form action="/dropCourse" method="post">
+                <input type="hidden" name="number" id="delnum">
+            <tr th:each="chosen : ${courseChosen}">
+                <td th:each="item : ${chosen}" th:text="${item}"></td>
+                    <input type="hidden" name="id" th:value="${chosen[0]}">
+                    <input type="hidden" name="year" value="2022">
+                    <input type="hidden" name="term" value="1">
+                    <td><input type="submit" value="退课"></td>
             </tr>
-
+            </form>
             </tbody>
         </table>
     </body>
+    <script>
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = "/login";
+        }
+        document.getElementById("hello").innerText = "您好,"+sessionStorage.getItem("name")+"!";
+        document.getElementById("name").value = sessionStorage.getItem("name");
+        document.getElementById("number").value = sessionStorage.getItem("number");
+        document.getElementById("delnum").value = sessionStorage.getItem("number");
+    </script>
+</html>

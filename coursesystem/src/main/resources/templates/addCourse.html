@@ -1,18 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <title>增加课程</title>
         <link rel="stylesheet"  type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
-        <script>
-            function tz(){
-                window.location.href='manageCourse.html';
-            }
-        </script>
     </head>
     <body>
-        <h3 class="text-center">添加新课程</h3><br>
+        <h3 class="text-center">增加新课程</h3><br>
+        <form action="/courseToExamine" method="post">
         <div class="container">
 
             <div class="row">
@@ -21,7 +17,7 @@
                     <label class="text">课程名称：</label>
                 </div >
                 <div class="col-md-2">
-                    <input type="text" class="form-control"><br>
+                    <input type="text" class="form-control" name="courseName"><br>
                 </div>
 
                 </div>
@@ -33,15 +29,15 @@
             <div class="row">
 
                 <div class="col-md-1">
-                    <label class="text">课程名称：</label>
+                    <label class="text">课程性质：</label>
                 </div >
 
                 <div class="col-md-4">
                     <!--这里select中加multiple可以实现多选-->
-                    <select class="form-control">
-                        <option>专业必修</option>
-                        <option>专业选修</option>
-                        <option>通识课程</option>
+                    <select class="form-control" name="property">
+                        <option value="专业必修">专业必修</option>
+                        <option value="专业选修">专业选修</option>
+                        <option value="通识课程">通识课程</option>
                     </select><br>
                 </div>
             </div>
@@ -54,7 +50,7 @@
                     <label class="text">学分：</label>
                 </div >
                 <div class="col-md-2">
-                    <input type="text" class="form-control"><br>
+                    <input type="text" class="form-control" name="credit"><br>
                 </div>
             </div>
         </div>
@@ -66,7 +62,7 @@
                     <label class="text">上课教室：</label>
                 </div >
                 <div class="col-md-2">
-                    <input type="text" class="form-control"><br>
+                    <input type="text" class="form-control" name="classroom"><br>
                 </div>
             </div>
         </div>
@@ -80,14 +76,14 @@
 
                 <div class="col-md-4">
                     <!--这里select中加multiple可以实现多选-->
-                    <select class="form-control">
-                        <option>周一</option>
-                        <option>周二</option>
-                        <option>周三</option>
-                        <option>周四</option>
-                        <option>周五</option>
-                        <option>周六</option>
-                        <option>周日</option>
+                    <select class="form-control" name="week">
+                        <option value="1">周一</option>
+                        <option value="2">周二</option>
+                        <option value="3">周三</option>
+                        <option value="4">周四</option>
+                        <option value="5">周五</option>
+                        <option value="6">周六</option>
+                        <option value="7">周日</option>
                     </select><br>
                 </div>
             </div>
@@ -99,7 +95,7 @@
                     <label class="text">时间：</label>
                 </div >
                 <div class="col-md-2">
-                    <input type="text" class="form-control"><br>
+                    <input type="text" class="form-control" name="time"><br>
                 </div>
             </div>
         </div>
@@ -110,7 +106,7 @@
                     <label class="text">开课学年：</label>
                 </div >
                 <div class="col-md-2">
-                    <input type="text" class="form-control"><br>
+                    <input type="text" class="form-control" name="year"><br>
                 </div>
             </div>
         </div>
@@ -123,9 +119,9 @@
                 </div >
 
                 <div class="col-md-4">
-                    <select class="form-control">
-                        <option>第一学期</option>
-                        <option>第二学期</option>
+                    <select class="form-control" name="term">
+                        <option value="1">第一学期</option>
+                        <option value="2">第二学期</option>
                     </select><br>
                 </div>
             </div>
@@ -139,17 +135,22 @@
                     <label class="text">课程内容：</label>
                 </div >
                 <div class="col-md-6">
-                    <textarea class="form-control"></textarea><br>
+                    <textarea class="form-control" name="content"></textarea><br>
                 </div>
 
             </div>
         </div>
+            <input type="hidden" name="name" id="name">
+            <input type="hidden" name="number" id="number">
 
         <div class="text-center">
-            <button type="button" class="btn btn-success" onclick="tz()">提交审核</button>
-            <button type="button" class="btn btn-warning">取消</button>
+            <input type="submit" class="btn btn-success" value="提交审核">
+            <button type="button" class="btn btn-warning" onclick="window.history.back();">取消</button>
         </div>
-
-
+        </form>
     </body>
+<script>
+    document.getElementById("name").value = sessionStorage.getItem("name");
+    document.getElementById("number").value = sessionStorage.getItem("number");
+</script>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>查看成绩</title>
@@ -16,21 +16,25 @@
 </head>
 <body>
 <div class="row" style="text-align: end">
-    <p>您好， 学生<!--这里要读取数据库--><a href="index.html">退出登录</a></p>
+    <p id="hello"></p>  <a href="#" onclick="logout()">退出登录</a>
 </div>
 <div class="container">
     <h2>已修课程</h2>
-    <p>选择学年 <select>
+    <form action="/getCourseScore" method="post">
+    <p>选择学年 <select name="year">
         <option value ="2022">2022</option>
         <option value ="2021">2021</option>
         <option value="2020">2020</option>
         <option value="2019">2019</option>
     </select> </p>
-    <p>选择学期 <select>
+    <p>选择学期 <select name="term">
         <option value ="1">1</option>
         <option value ="2">2</option>
-        <option value="暑期">暑期</option>
     </select> </p>
+        <br>
+        <input type="hidden" name="number" id="number">
+        <input type="submit" value="搜索">
+    </form>
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -45,8 +49,19 @@
         </tr>
         </thead>
         <tbody>
+        <tr th:each="courses:${courseLearned}">
+            <td th:each="course:${courses}" th:text="${course}"></td>
+        </tr>
         </tbody>
     </table>
 </div>
 </body>
+<script>
+    function logout() {
+        sessionStorage.clear();
+        window.location.href = "/login";
+    }
+    document.getElementById("hello").innerText = "您好,"+sessionStorage.getItem("name")+"!";
+    document.getElementById("number").value = sessionStorage.getItem("number");
+</script>
 </html>

@@ -1,45 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <title>发布</title>
         <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
         <link rel="stylesheet"  type="text/css" href="css/bootstrap.css">
-        <script>
-            function tz(){
-                window.location.href='releaseScore.html';
-            }
-        </script>
     </head>
     <body>
         <h3 class="text-center">成绩发布</h3><br>
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
-                <th>课程名称</th>
                 <th>学生姓名</th>
+                <th>学号</th>
                 <th>成绩</th>
                 <th>等第</th>
                 <th>绩点</th>
                 <th>备注</th>
+                <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
+            <tr th:each="students:${allStudents}">
+                <form action="/releaseScore" method="post">
+                <td th:text="${students[0]}"></td>
+                <td th:text="${students[1]}"></td>
+                <td><input type="number" max="100" min="0" name="score" th:value="${students[2]}"></td>
+                <td><input type="text" name="grade" th:value="${students[3]}"></td>
+                <td><input type="text" name="gpa" th:value="${students[4]}"></td>
+                <td><input type="text" name="comment" th:value="${students[5]}"></td>
+                    <input type="hidden" name="number" th:value="${students[1]}">
+                    <input type="hidden" name="id" th:value="${id}">
+                <td><input type="submit" value="发布成绩"></td>
+                </form>
             </tr>
             </tbody>
         </table>
 
-
+        <form action="/commitScore" method="post">
         <div class="text-center">
-            <button onclick="tz()">确认</button>
-            <button onclick="tz()">取消</button>
+                <input type="hidden" name="id" th:value="${id}">
+                <input type="hidden" name="number" id="number">
+                <input type="hidden" name="year" th:value="${year}">
+                <input type="hidden" name="term" th:value="${term}">
+                <input type="submit" value="确定">
+            <button type="button" onclick="window.history.back();">取消</button>
         </div>
-
+        </form>
+        <script>
+            document.getElementById("number").value = sessionStorage.getItem("number");
+        </script>
     </body>
+</html>
