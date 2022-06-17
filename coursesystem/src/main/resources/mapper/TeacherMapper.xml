@@ -14,9 +14,9 @@
     </select>
 
     <delete id="deleteCourse">
-        delete * from course where id = #{id};
-        delete * from student where id = #{id};
-        delete * from teacher where id = #{id}
+        delete from course where id = #{id};
+        delete from student where id = #{id};
+        delete from teacher where id = #{id}
     </delete>
 
     <insert id="addCourse">
