@@ -71,6 +71,7 @@ public class AdminController {
         model.addAttribute("teacher", cb.getTeacher());
         model.addAttribute("credit", cb.getCredit());
         model.addAttribute("content", cb.getContent());
+        model.addAttribute("id", id);
         return "examine";
     }
 
@@ -125,6 +126,7 @@ public class AdminController {
             allScore.add(list);
         }
         model.addAttribute("scoreOfStudents", allScore);
+        model.addAttribute("id", id);
         return "studentScore";
     }
 
