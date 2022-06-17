@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
 @Api(value = "用户控制器", tags = {"用户"})
@@ -20,7 +21,7 @@ public class UserController {
     @ApiOperation(value = "用户登录")
     public String login(String name, int number, String password, Model model){
         UserBean userBean = userService.loginIn(name, number, password);
-        if(userBean==null) return "index";
+        if(userBean==null) return "login";
         model.addAttribute("name", userBean.getName());
         model.addAttribute("number", userBean.getNumber());
         String type = userBean.getType();
@@ -51,4 +52,10 @@ public class UserController {
     @RequestMapping("/register")
     @ApiOperation(value = "进入注册界面")
     public void registerPage(){}
+
+    @RequestMapping("/")
+    @ApiIgnore
+    public String init(){
+        return "login";
+    }
 }
