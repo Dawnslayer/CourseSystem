@@ -25,7 +25,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
                 .title("Swagger接口文档")
-                .contact(new Contact("向晚大魔王", "", ""))
+                .contact(new Contact("嘉然今天吃什么", "", ""))
                 .version("1.0")
                 .description("项目的Swagger接口")
                 .build();
